@@ -1,0 +1,30 @@
+Fregement's : Common part of the page which we can used multi page with same formate.
+        Syntax : footer will be the file and copy will be the Fregement.
+        
+                <body> 
+                    <div th:insert="footer :: copy">...</div>
+                </body>
+
+Fragment in Thymleaf 
+
+    how to create fragments
+        <div class="parent-fragment" th:fragment="parent(content)">
+            <h1>This is parent fregement</h1>
+            <!-- <h2>Sum of value : <span th:text="${x} + ${y}"></span></h2> -->
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde doloremque cupiditate quod commodi assumenda ad,
+            eaque placeat distinctio. Cum quaerat hic ex illo rem assumenda esse recusandae sed quod accusamus!</p>
+            <p th:replace="${content}"></p>
+        </div>
+
+    how to insert and replace fragment
+        <div th:replace="~{base :: parent(~{::.third_content})}">
+            <section id="main_content">
+                <h1>This is Dynamic services passed to base parent</h1>
+            </section>
+            <section id="second_content">
+                <h1>This is second content</h1>
+            </section>
+            <section class="third_content">
+                <h1>This is Third content</h1>
+            </section>
+        </div>

@@ -1,0 +1,18 @@
+{
+  "name": "smart-contact-manager",
+  "version": "1.0.0",
+  "description": "Smart Contact Manager",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.9"
+  },
+  "dependencies": {
+    "smart-contact-manager": "file:"
+  }
+}
