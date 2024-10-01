@@ -3,6 +3,7 @@ package com.prathamesh.dev.smart_contact_manager.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import com.prathamesh.dev.smart_contact_manager.Helper.MessageType;
 import com.prathamesh.dev.smart_contact_manager.Service.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -68,8 +70,12 @@ public class PageController {
 
     // Processing Register
     @RequestMapping(value = "/do-register",method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm,HttpSession session){
+    public String processRegister(@Valid @ModelAttribute UserForm userForm,BindingResult bindingResult,HttpSession session){
         
+        if(bindingResult.hasErrors()){
+            return "register";
+        }
+
         // UserForm ---> user
         // User user = User.builder()
         // .name(userForm.getName())
@@ -80,13 +86,13 @@ public class PageController {
         // .profilePic(userForm.getProfilePic())
         // .build();
 
+
         User user = new User();
         user.setName(userForm.getName());
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
-        user.setProfilePic(userForm.getProfilePic());
     
         userService.saveUser(user);
 
