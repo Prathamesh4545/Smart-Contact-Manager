@@ -70,6 +70,7 @@ public class PageController {
     @RequestMapping(value = "/do-register",method = RequestMethod.POST)
     public String processRegister(@ModelAttribute UserForm userForm,HttpSession session){
         
+        // UserForm ---> user
         // User user = User.builder()
         // .name(userForm.getName())
         // .email(userForm.getEmail())
@@ -90,7 +91,7 @@ public class PageController {
         userService.saveUser(user);
 
         //add message
-        Message message = Message.builder().content("Register  Successfully").type(MessageType.green).build();
+        Message message = Message.builder().content("Register  Successfully").type(MessageType.blue).build();
 
         session.setAttribute("message",message);
 
