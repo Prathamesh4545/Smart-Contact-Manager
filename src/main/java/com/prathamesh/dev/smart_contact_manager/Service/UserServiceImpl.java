@@ -3,9 +3,11 @@ package com.prathamesh.dev.smart_contact_manager.Service;
 import java.util.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.prathamesh.dev.smart_contact_manager.Entities.User;
+import com.prathamesh.dev.smart_contact_manager.Helper.AppConstants;
 import com.prathamesh.dev.smart_contact_manager.Helper.ResourceNotFoundException;
 import com.prathamesh.dev.smart_contact_manager.Repositories.UserRepo;
 
@@ -17,12 +19,21 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User saveUser(User user) {
         String userId = UUID.randomUUID().toString();
         user.setUserID(userId);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        //set user role
+
+        //set provider
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
         return userRepo.save(user);
     }
 
