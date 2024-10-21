@@ -1,13 +1,15 @@
 package com.prathamesh.dev.smart_contact_manager.Controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
 
     //user dashboard page
     @RequestMapping(value = "/dashboard")
@@ -17,7 +19,7 @@ public class UserController {
 
     //user profile page
     @RequestMapping(value = "/profile")
-    public String userProfile() {
+    public String userProfile(Model model,Authentication authentication) {
         return "user/profile";
     }
     

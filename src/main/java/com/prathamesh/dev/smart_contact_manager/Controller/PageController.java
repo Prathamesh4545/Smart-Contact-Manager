@@ -63,6 +63,7 @@ public class PageController {
         return "login";
     }
     // Services Page route
+    // Registration Page
     @RequestMapping("/register")
     public String registerPage(Model model) {
         
@@ -98,6 +99,7 @@ public class PageController {
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic("img/user-circles-set.png");
     
         userService.saveUser(user);
 
