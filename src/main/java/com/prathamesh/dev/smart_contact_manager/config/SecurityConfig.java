@@ -25,7 +25,7 @@ public class SecurityConfig {
 
       // Constants
       private static final String LOGIN_URL = "/login";
-      private static final String DASHBOARD_URL = "/user/dashboard";
+      private static final String DASHBOARD_URL = "/user/profile";
       private static final String AUTHENTICATE_URL = "/authenticate";
       private static final String EMAIL_PARAMETER = "email";
       private static final String PASSWORD_PARAMETER = "password";
