@@ -2,7 +2,7 @@
 <html lang="en" th:replace="~{base :: parent(~{:: #content},~{::title},~{::script})}">
 
 <head>
-  <title th:text="${loggedInUser.name} + ' | smart-contact-manager'">Profile Page</title>
+  <title th:text="${loggedInUser.name} + ' | Profile'">Profile Page</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
       <div th:replace="~{user/sidebar :: sidebar}"></div>
     </div>
 
-    <div class="pt-20 pl-64" style="height: 1000px;">
+    <div class="sm:pl-64 pt-20" style="height: 1000px;">
       <div class="flex justify-center flex-col items-center">
         <h1 class="text-5xl">Welcome to Profile page</h1>
         <p>
