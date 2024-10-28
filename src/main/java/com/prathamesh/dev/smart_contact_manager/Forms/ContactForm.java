@@ -1,6 +1,11 @@
 package com.prathamesh.dev.smart_contact_manager.Forms;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +18,25 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ContactForm {
+
+    @NotBlank(message = "Name is required")
+    @Size(message = "Min 3 Character is rqeuired", min = 3)
     private String firstName;
     private String lastName;
-    private String name;  // full name (first name + last name)
+
+    private String name; // full name (first name + last name)
+
+    @Email(message = "Invalid Email Address [example@gmail.com]")
+    @NotBlank(message = "Email is required")
     private String email;
+
+    @NotBlank(message = "Phone No is required")
+    @Pattern(regexp = "^\\d{10}$", message = "Invalid Phone Number")
     private String phoneNumber;
+
+    @NotBlank(message = "Address is required")
     private String address;
+
     private String description;
     private boolean favorite;
     private String webSiteLink;

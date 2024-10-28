@@ -19,6 +19,8 @@
         <div class="col-span-12 md:col-span-6">
           <div
             class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div th:replace="~{message::messagebox}"></div>
+
             <h1 class="text-2xl font-semibold mb-4">Add New Contact</h1>
             <p class="text-gray-600 mb-6">This contact will be stored in the cloud.</p>
 
@@ -29,14 +31,17 @@
                     Name</label>
                   <input type="text" th:field="*{firstName}" name="first_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Prathamesh" required />
+                    placeholder="Prathamesh" />
+                  <p th:if="${#fields.hasErrors('firstName')}" data-th-errors="*{firstName}"
+                    class="text-red-600 px-1 py-2">Invalid
+                    First Name</p>
                 </div>
                 <div>
                   <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
                     Name</label>
-                  <input type="text"th:field="*{lastName}" name="last_name"
+                  <input type="text" th:field="*{lastName}" name="last_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Date" required />
+                    placeholder="Date" />
                 </div>
                 <!-- Hidden field for combined full name -->
                 <input type="hidden" id="full_name" th:field="*{name}" />
@@ -46,7 +51,9 @@
                     Address</label>
                   <input th:field="*{email}" type="email" name="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="example@company.com" required />
+                    placeholder="example@company.com" />
+                  <p th:if="${#fields.hasErrors('email')}" data-th-errors="*{email}" class="text-red-600 px-1 py-2">
+                    Invalid Address</p>
                 </div>
                 <div>
                   <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
@@ -54,6 +61,8 @@
                   <input th:field="*{phoneNumber}" type="tel" name="phone"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     placeholder="123-45-678" />
+                  <p th:if="${#fields.hasErrors('phoneNumber')}" data-th-errors="*{phoneNumber}"
+                    class="text-red-600 px-1 py-2">Invalid Phone Number</p>
                 </div>
                 <div>
                   <label for="facebook_url"
@@ -76,7 +85,9 @@
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Address</label>
                 <textarea th:field="*{address}" name="contact_address" rows="4"
                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="Write address here..." required></textarea>
+                  placeholder="Write address here..."></textarea>
+                  <p th:if="${#fields.hasErrors('address')}" data-th-errors="*{address}"
+                  class="text-red-600 px-1 py-2">Invalid Address</p>
               </div>
 
               <div class="mb-6">
@@ -84,7 +95,7 @@
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Description</label>
                 <textarea th:field="*{description}" name="contact_description" rows="4"
                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="Write contact description here..." required></textarea>
+                  placeholder="Write contact description here..."></textarea>
               </div>
 
               <div class="mb-6">

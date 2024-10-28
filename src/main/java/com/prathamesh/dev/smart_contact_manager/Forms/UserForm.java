@@ -27,8 +27,8 @@ public class UserForm {
 
     @NotBlank(message = "Password is required")
     @Size(message="Min 8 Character is rqeuired", min = 8)
-    
     private String password;
+    
     @NotBlank(message = "About is required")
     private String about;
 
