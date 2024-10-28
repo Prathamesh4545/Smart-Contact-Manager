@@ -12,11 +12,10 @@
     <div class="grid grid-cols-12 mt-5">
       <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
       <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
-
         <div
-          class="max-w p-6 bg-white border border-t-8 border-t-blue-900 rounded-xl shadow dark:bg-gray-800 dark:border-blue-700">
+        class="max-w p-6 bg-white border border-t-8 from-teal-200 to-lime-200  border-t-lime-500 via-lime-600 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 rounded-xl shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium dark:bg-gray-800 dark:border-lime-700">
 
-          <div th:replace="message::messagebox"></div>
+          <div th:replace="~{message::messagebox}"></div>
 
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Sign-Up Here</h5>
           <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Start Managing Contact on cloud...</p>
