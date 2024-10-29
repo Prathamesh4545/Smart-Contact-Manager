@@ -1,5 +1,9 @@
 package com.prathamesh.dev.smart_contact_manager.Controller;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import com.prathamesh.dev.smart_contact_manager.Helper.Helper;
 import com.prathamesh.dev.smart_contact_manager.Helper.Message;
 import com.prathamesh.dev.smart_contact_manager.Helper.MessageType;
 import com.prathamesh.dev.smart_contact_manager.Service.ContactService;
+import com.prathamesh.dev.smart_contact_manager.Service.ImageService;
 import com.prathamesh.dev.smart_contact_manager.Service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +31,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/user/contacts")
 public class ContactController {
+
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private ContactService contactService;
@@ -60,6 +70,10 @@ public class ContactController {
 
         // process contact pitcher
 
+        String fileURL = imageService.uploadimage(contactForm.getContactImg());
+
+        // image process
+        logger.info("File Info : {}", contactForm.getContactImg().getOriginalFilename());
 
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
@@ -71,6 +85,7 @@ public class ContactController {
         contact.setUser(user);
         contact.setWebSiteLink(contactForm.getWebSiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
+        contact.setPicture(fileURL);
         contactService.saveContact(contact);
         System.out.println(contactForm);
 
@@ -79,4 +94,17 @@ public class ContactController {
         session.setAttribute("message",message);
         return "redirect:/user/contacts/add";
     }
+
+    // view contacts 
+    @RequestMapping
+    public String viewContacts(Model model,Authentication authentication){
+
+        // load all user contacts
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username);
+        List<Contact> contacts = contactService.getByUser(user);
+        model.addAttribute("contacts",contacts);
+        return "user/contacts";
+    }
+
 }

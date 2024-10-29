@@ -2,6 +2,8 @@ package com.prathamesh.dev.smart_contact_manager.Forms;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.prathamesh.dev.smart_contact_manager.Validators.ValidFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -41,7 +43,9 @@ public class ContactForm {
     private boolean favorite;
     private String webSiteLink;
     private String linkedInLink;
-    private MultipartFile profileImage;
+
+    @ValidFile
+    private MultipartFile contactImg;
 
     public String getName() {
         return (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");

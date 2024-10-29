@@ -1,4 +1,4 @@
-package com.prathamesh.dev.smart_contact_manager.Service;
+package com.prathamesh.dev.smart_contact_manager.Service.Implementation;
 
 import java.util.*;
 import org.slf4j.LoggerFactory;
@@ -10,6 +10,7 @@ import com.prathamesh.dev.smart_contact_manager.Entities.User;
 import com.prathamesh.dev.smart_contact_manager.Helper.AppConstants;
 import com.prathamesh.dev.smart_contact_manager.Helper.ResourceNotFoundException;
 import com.prathamesh.dev.smart_contact_manager.Repositories.UserRepo;
+import com.prathamesh.dev.smart_contact_manager.Service.UserService;
 
 import ch.qos.logback.classic.Logger;
 

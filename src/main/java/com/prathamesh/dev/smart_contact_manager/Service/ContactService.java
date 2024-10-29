@@ -3,6 +3,7 @@ package com.prathamesh.dev.smart_contact_manager.Service;
 import java.util.List;
 
 import com.prathamesh.dev.smart_contact_manager.Entities.Contact;
+import com.prathamesh.dev.smart_contact_manager.Entities.User;
 
 public interface ContactService {
 
@@ -20,4 +21,5 @@ public interface ContactService {
     // List<Contact> searchContact(String name,String email,String phoneNumber);
     //get contact by User ID
     List<Contact> getContactByUserId(String userId);
+    List<Contact> getByUser(User user);
 }

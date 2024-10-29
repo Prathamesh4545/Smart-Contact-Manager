@@ -24,7 +24,7 @@
             <h1 class="text-2xl font-semibold mb-4">Add New Contact</h1>
             <p class="text-gray-600 mb-6">This contact will be stored in the cloud.</p>
 
-            <form class="mt-8" data-th-action="@{'/user/contacts/add'}" method="POST" th:object="${contactForm}">
+            <form class="mt-8" data-th-action="@{'/user/contacts/add'}" method="POST" th:object="${contactForm}" enctype="multipart/form-data">
               <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
                   <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
@@ -103,7 +103,9 @@
                   Image</label>
                 <input
                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  type="file" accept="image/*" />
+                  type="file" th:field="*{contactImg}" accept="image/png, image/jpeg"/>
+                  <p th:if="${#fields.hasErrors('contactImg')}" data-th-errors="*{contactImg}"
+                  class="text-red-600 px-1 py-2">Invalid File Size</p>
               </div>
 
               <div class="flex items-start mb-6">

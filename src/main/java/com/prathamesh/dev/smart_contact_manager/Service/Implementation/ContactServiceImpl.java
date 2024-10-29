@@ -1,4 +1,4 @@
-package com.prathamesh.dev.smart_contact_manager.Service;
+package com.prathamesh.dev.smart_contact_manager.Service.Implementation;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.prathamesh.dev.smart_contact_manager.Entities.Contact;
+import com.prathamesh.dev.smart_contact_manager.Entities.User;
 import com.prathamesh.dev.smart_contact_manager.Helper.ResourceNotFoundException;
 import com.prathamesh.dev.smart_contact_manager.Repositories.ContactRepo;
+import com.prathamesh.dev.smart_contact_manager.Service.ContactService;
 
 @Service
 public class ContactServiceImpl implements ContactService{
@@ -53,6 +55,11 @@ public class ContactServiceImpl implements ContactService{
     @Override
     public List<Contact> getContactByUserId(String userId) {
         return contactRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Contact> getByUser(User user) {
+       return contactRepository.findByUser(user);
     }
     
 }
