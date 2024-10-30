@@ -2,24 +2,37 @@ package com.prathamesh.dev.smart_contact_manager.Service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.prathamesh.dev.smart_contact_manager.Entities.Contact;
 import com.prathamesh.dev.smart_contact_manager.Entities.User;
 
 public interface ContactService {
 
-    //save contact
+    // save contact
     Contact saveContact(Contact contact);
-    //update contact
+
+    // update contact
     Contact updateContact(Contact contact);
-    //get contact
+
+    // get contact
     List<Contact> getAll();
-    //delete contact
+
+    // delete contact
     void deleteContact(String id);
-    //get contact by ID
+
+    // get contact by ID
     Contact getContactById(String id);
-    //search contact
-    // List<Contact> searchContact(String name,String email,String phoneNumber);
-    //get contact by User ID
+
+    // search contact
+    Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order,User user);
+
+    Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order,User user);
+
+    Page<Contact> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String order,User user);
+
+    // get contact by User ID
     List<Contact> getContactByUserId(String userId);
-    List<Contact> getByUser(User user);
+
+    Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
 }
