@@ -1,0 +1,41 @@
+<div th:fragment="contact">
+    <!-- Main modal -->
+    <div id="view_contact_modal" tabindex="-1" aria-hidden="true"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden overflow-auto bg-black bg-opacity-50">
+        <div class="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg md:max-w-2xl">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between pb-4 border-b">
+                    <h3 class="text-2xl font-semibold text-gray-800">Contact Details</h3>
+                    <button type="button" onclick="closeContactModal()"
+                        class="text-gray-400 hover:text-gray-800 focus:outline-none">
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 5l10 10M5 15L15 5" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="flex flex-col items-center py-6">
+                    <img class="w-28 h-28 mb-4 rounded-full shadow-lg" id="contact_img" alt="Profile picture" />
+                    <h5 id="contact_name" class="mb-2 text-2xl font-medium text-gray-800"></h5>
+                    <span id="contact_email" class="text-sm text-gray-600"></span>
+                    <span id="contact_phone" class="text-sm text-gray-600"></span>
+                    <span id="contact_address" class="text-sm text-gray-600"></span>
+                    <span id="contact_description" class="mt-2 text-sm text-gray-600 text-center"></span>
+                    <span id="contact_favorite"
+                        class="mt-2 text-sm text-green-500 hidden">Favorite</span>
+                    <div class="flex justify-center mt-4 space-x-4">
+                        <a id="contact_linkedin" href="#" target="_blank" aria-label="LinkedIn profile link"
+                            class="text-blue-500 hover:underline">LinkedIn</a>
+                        <a id="contact_website" href="#" target="_blank" aria-label="Website link"
+                            class="text-blue-500 hover:underline">Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

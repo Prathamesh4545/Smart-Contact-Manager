@@ -32,7 +32,18 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact updateContact(Contact contact) {
-        return contactRepository.save(contact);
+
+        var contactOld = contactRepository.findById(contact.getId()).orElseThrow(() -> new ResourceNotFoundException("Contact Not Found"));
+        contactOld.setName(contact.getName());
+        contactOld.setEmail(contact.getEmail());
+        contactOld.setPhoneNumber(contact.getPhoneNumber());
+        contactOld.setAddress(contact.getAddress());
+        contactOld.setDescription(contact.getDescription());
+        contactOld.setPicture(contact.getPicture());
+        contactOld.setFavorite(contact.isFavorite());
+        contactOld.setWebSiteLink(contact.getWebSiteLink());
+        contactOld.setLinkedInLink(contact.getLinkedInLink());
+        return contactRepository.save(contactOld);
     }
 
     @Override
@@ -50,11 +61,6 @@ public class ContactServiceImpl implements ContactService{
     public Contact getContactById(String id) {
         return contactRepository.findById(id).orElseThrow(() ->  new ResourceNotFoundException("Contact Not Found With Id : "+id));
     }
-
-    // @Override
-    // public List<Contact> searchContact(String name,String email,String phoneNumber) {
-    //     return contactRepository.searchContact(name,email,phoneNumber);
-    // }
 
     @Override
     public List<Contact> getContactByUserId(String userId) {

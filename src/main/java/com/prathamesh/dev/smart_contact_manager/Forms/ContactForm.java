@@ -47,6 +47,8 @@ public class ContactForm {
     @ValidFile
     private MultipartFile contactImg;
 
+    private String picture;
+
     public String getName() {
         return (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
     }

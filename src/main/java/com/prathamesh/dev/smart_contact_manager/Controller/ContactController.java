@@ -1,5 +1,10 @@
 package com.prathamesh.dev.smart_contact_manager.Controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -30,6 +36,7 @@ import lombok.val;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/user/contacts")
@@ -167,6 +174,110 @@ public class ContactController {
             default:
                 throw new IllegalArgumentException("Invalid search field: " + field);
         }
+    }
+
+    // delete contact
+    @RequestMapping("/delete/{contactID}")
+    public String deleteContact(@PathVariable("contactID") String contactID) {
+        // Fetch the contact to get the image filename
+        Contact contact = contactService.getContactById(contactID);
+        String imageName = contact.getPicture(); // Assuming 'getPicture()' returns the image filename
+
+        // Delete the contact
+        contactService.deleteContact(contactID);
+        logger.info("contactID {} deleted", contactID);
+
+        // Delete the image file
+        if (imageName != null) {
+            Path imagePath = Paths.get("src/main/resources/static/upload/directory/" + imageName);
+            try {
+                Files.deleteIfExists(imagePath);
+                logger.info("Image file {} deleted", imageName);
+            } catch (IOException e) {
+                logger.error("Error deleting image file {}: {}", imageName, e.getMessage());
+            }
+        }
+
+        return "redirect:/user/contacts";
+    }
+
+    // update contact from view
+    @RequestMapping("/view/{contactID}")
+    public String updateContactFromView(@PathVariable("contactID") String contactID, Model model) {
+        var contact = contactService.getContactById(contactID);
+
+        if (contact == null) {
+            logger.error("Contact with ID {} not found", contactID);
+            model.addAttribute("errorMessage", "Contact not found.");
+            return "error/contact_not_found";
+        }
+
+        ContactForm contactForm = new ContactForm();
+
+        // Split the name into first and last name
+        String[] nameParts = contact.getName().split(" ", 2); // Split into 2 parts to handle cases with multiple spaces
+        contactForm.setFirstName(nameParts.length > 0 ? nameParts[0] : "");
+        contactForm.setLastName(nameParts.length > 1 ? nameParts[1] : ""); // Handle case where there's no last name
+
+        contactForm.setEmail(contact.getEmail());
+        contactForm.setPhoneNumber(contact.getPhoneNumber());
+        contactForm.setAddress(contact.getAddress());
+        contactForm.setDescription(contact.getDescription());
+        contactForm.setFavorite(contact.isFavorite());
+        contactForm.setWebSiteLink(contact.getWebSiteLink());
+        contactForm.setLinkedInLink(contact.getLinkedInLink());
+        contactForm.setPicture(contact.getPicture());
+
+        model.addAttribute("contactForm", contactForm);
+        model.addAttribute("contactID", contactID);
+
+        return "user/update_contact_view";
+    }
+
+    @RequestMapping(value = "/update/{contactID}", method = RequestMethod.POST)
+    public String updateContact(@PathVariable("contactID") String contactID, @ModelAttribute ContactForm contactForm,
+            Model model) {
+        // Fetch existing contact to preserve the existing picture if no new picture is
+        // provided
+        Contact existingContact = contactService.getContactById(contactID);
+        var con = new Contact();
+        con.setId(contactID);
+        con.setName(contactForm.getName());
+        con.setEmail(contactForm.getEmail());
+        con.setPhoneNumber(contactForm.getPhoneNumber());
+        con.setAddress(contactForm.getAddress());
+        con.setDescription(contactForm.getDescription());
+        con.setFavorite(contactForm.isFavorite());
+        con.setWebSiteLink(contactForm.getWebSiteLink());
+        con.setLinkedInLink(contactForm.getLinkedInLink());
+
+        // Process image
+        MultipartFile imageFile = contactForm.getContactImg();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            // Assuming you have an image service to handle file saving
+            String imagePath = imageService.uploadimage(imageFile);
+            con.setPicture(imagePath);
+            // Delete the old image
+            String oldImageName = existingContact.getPicture();
+            if (oldImageName != null) {
+                Path oldImagePath = Paths.get("src/main/resources/static/upload/directory/" + oldImageName);
+                try {
+                    Files.deleteIfExists(oldImagePath);
+                    logger.info("Old image file {} deleted", oldImageName);
+                } catch (IOException e) {
+                    logger.error("Error deleting old image file {}: {}", oldImageName, e.getMessage());
+                }
+            }
+        } else {
+            con.setPicture(existingContact.getPicture());
+        }
+
+        // Update contact
+        var updatedContact = contactService.updateContact(con);
+        logger.info("Updated contact {}", updatedContact);
+
+        model.addAttribute("message", Message.builder().content("Contact Updated").type(MessageType.green).build());
+        return "redirect:/user/contacts/view/" + contactID;
     }
 
 }

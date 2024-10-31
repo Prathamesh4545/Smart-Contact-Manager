@@ -2,30 +2,61 @@
 <html lang="en" th:replace="~{base :: parent(~{:: #content},~{::title},~{::script})}">
 
 <head>
-  <title th:text="${loggedInUser.name} + ' | Dashboard'">Profile Page</title>
+  <title th:text="${loggedInUser.name} + ' | Dashboard'">Dashboard Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-gray-100 dark:bg-gray-900">
   <div id="content">
 
-    <!-- user is logged in : sidebar -->
+    <!-- Sidebar for logged-in users -->
     <div th:if="${loggedInUser}">
       <div th:replace="~{user/sidebar :: sidebar}"></div>
     </div>
 
-    <div class="sm:pl-64 pt-20" style="height: 1000px;">
-      <div class="flex justify-center flex-col items-center">
-        <h1 class="text-5xl">Welcome to Dashboard page</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    <div class="sm:pl-64 pt-20 min-h-screen flex flex-col items-center">
+      <div class="max-w-2xl w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 mb-8">
+        <h1 class="text-5xl font-bold text-gray-800 dark:text-gray-200 text-center mb-4">Welcome to the Dashboard</h1>
+        <p class="text-gray-600 dark:text-gray-400 text-lg text-center">
+          Here you can manage your contacts efficiently.
         </p>
+        <div class="mt-6 text-center">
+          <a href="/add-contact" class="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 transition">
+            Add New Contact
+          </a>
+        </div>
+      </div>
+
+      <div class="max-w-4xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Example Contact Card -->
+        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+          <img src="path/to/profile-pic.jpg" alt="Contact Photo" class="w-16 h-16 rounded-full mx-auto border-2 border-gray-200 dark:border-gray-600 mb-4">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 text-center">Contact Name</h2>
+          <p class="text-gray-600 dark:text-gray-400 text-center">user@example.com</p>
+          <p class="text-gray-600 dark:text-gray-400 text-center">+1234567890</p>
+          <div class="flex justify-center mt-4">
+            <a href="/edit-contact" class="bg-blue-500 text-white rounded-lg px-3 py-1 hover:bg-blue-600 transition">Edit</a>
+          </div>
+        </div>
+
+        <!-- Repeat Contact Cards as necessary -->
+        <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+          <img src="path/to/profile-pic.jpg" alt="Contact Photo" class="w-16 h-16 rounded-full mx-auto border-2 border-gray-200 dark:border-gray-600 mb-4">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 text-center">Another Contact</h2>
+          <p class="text-gray-600 dark:text-gray-400 text-center">another@example.com</p>
+          <p class="text-gray-600 dark:text-gray-400 text-center">+9876543210</p>
+          <div class="flex justify-center mt-4">
+            <a href="/edit-contact" class="bg-blue-500 text-white rounded-lg px-3 py-1 hover:bg-blue-600 transition">Edit</a>
+          </div>
+        </div>
+
+        <!-- Add more contact cards dynamically -->
       </div>
     </div>
 
-
   </div>
   <script>
-    console.log("This is Dashboard page");
+    console.log("This is the Dashboard page");
   </script>
 </body>
 
